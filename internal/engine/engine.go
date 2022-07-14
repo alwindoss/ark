@@ -49,39 +49,3 @@ func Run(cfg *ark.Config) error {
 	http.ListenAndServe(addr, r)
 	return nil
 }
-
-// func RunGin(cfg *ark.Config) error {
-
-// 	repo := vault.NewFSRepository(cfg.TempFolder)
-// 	svc := vault.NewService(repo)
-
-// 	saveHandler := httptransport.NewServer(
-// 		makeSaveEndpoint(svc),
-// 		decodeSaveRequest,
-// 		encodeSaveResponse,
-// 	)
-
-// 	retrieveHandler := httptransport.NewServer(
-// 		makeRetrieveEndpoint(svc),
-// 		decodeRetrieveRequest,
-// 		encodeRetrieveResponse,
-// 	)
-
-// 	// http.Handle("/uppercase", uppercaseHandler)
-// 	// http.Handle("/count", countHandler)
-
-// 	r := gin.Default()
-// 	r.GET("/ping", func(c *gin.Context) {
-// 		c.JSON(http.StatusOK, gin.H{
-// 			"message": "pong",
-// 		})
-// 	})
-// 	r.POST("/vault", gin.WrapH(saveHandler))
-// 	r.GET("/vault/:key", gin.WrapH(retrieveHandler))
-// 	addr := fmt.Sprintf(":%d", cfg.Port)
-// 	err := r.Run(addr) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
