@@ -78,7 +78,9 @@ func (v *fsVaultRepository) Save(key []byte, value io.Reader) error {
 		err = fmt.Errorf("error when creating file %s: %w", filePath, err)
 		return err
 	}
+	defer f.Close()
 	zw := zlib.NewWriter(f)
+	defer zw.Close()
 	written, err := io.Copy(zw, value)
 	if err != nil {
 		err = fmt.Errorf("error compressing the value: %w", err)
