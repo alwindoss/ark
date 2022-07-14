@@ -5,7 +5,6 @@ import (
 	"compress/zlib"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 )
@@ -28,10 +27,7 @@ type fsVaultRepository struct {
 // Retrieve implements Repository
 func (v *fsVaultRepository) Retrieve(key []byte) (io.Reader, error) {
 	keyStr := sha256EncodedKey(key)
-	fmt.Printf("Key String: %s\n", keyStr)
 	folderName, fileName := getFolderAndFileName(keyStr)
-	fmt.Printf("Folder Name: %s\n", folderName)
-	fmt.Printf("File Name: %s\n", fileName)
 
 	folderPath := filepath.Join(v.VaultDir, folderName)
 	err := os.MkdirAll(folderPath, 0766)
@@ -61,10 +57,7 @@ func (v *fsVaultRepository) Retrieve(key []byte) (io.Reader, error) {
 // Save implements Repository
 func (v *fsVaultRepository) Save(key []byte, value io.Reader) error {
 	keyStr := sha256EncodedKey(key)
-	fmt.Printf("Key String: %s\n", keyStr)
 	folderName, fileName := getFolderAndFileName(keyStr)
-	fmt.Printf("Folder Name: %s\n", folderName)
-	fmt.Printf("File Name: %s\n", fileName)
 
 	folderPath := filepath.Join(v.VaultDir, folderName)
 	err := os.MkdirAll(folderPath, 0766)
@@ -81,12 +74,12 @@ func (v *fsVaultRepository) Save(key []byte, value io.Reader) error {
 	defer f.Close()
 	zw := zlib.NewWriter(f)
 	defer zw.Close()
-	written, err := io.Copy(zw, value)
+	_, err = io.Copy(zw, value)
 	if err != nil {
 		err = fmt.Errorf("error compressing the value: %w", err)
 		return err
 	}
-	log.Printf("number of bytes written to the file %s is %d", filePath, written)
+	// log.Printf("number of bytes written to the file %s is %d", filePath, written)
 
 	return nil
 }

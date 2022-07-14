@@ -14,7 +14,7 @@ import (
 
 func Run(cfg *ark.Config) error {
 	repo := vault.NewFSRepository(cfg.TempFolder)
-	svc := vault.NewService(repo)
+	svc := vault.NewService(repo, "masterpassword123234323232")
 
 	saveHandler := httptransport.NewServer(
 		makeSaveEndpoint(svc),

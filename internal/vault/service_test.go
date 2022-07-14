@@ -11,7 +11,7 @@ import (
 func TestVaultService(t *testing.T) {
 	loc := t.TempDir()
 	repo := vault.NewFSRepository(loc)
-	svc := vault.NewService(repo)
+	svc := vault.NewService(repo, "masterpassword123234323232")
 	key := []byte("key1")
 	valueStr := "This is the value1 for key1"
 	value := strings.NewReader(valueStr)
